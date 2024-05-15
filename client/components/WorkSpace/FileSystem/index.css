@@ -1,0 +1,62 @@
+.folder {
+  margin-top: 1px;
+  /* background-color: grey; */
+  color: "white";
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  padding: 0px;
+  width: 300px;
+  cursor: pointer;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.inputContainer > span {
+  margin-top: 5px;
+}
+
+.inputContainer__input {
+  margin: 6px 0 0px 0;
+  padding: 5px;
+  display: flex;
+  border: 1px solid lightgray;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.folder > span {
+  margin: 0 5px;
+}
+
+.folder > div > button {
+  font-size: 15px;
+  background-color: white;
+}
+
+.file {
+  margin-top: 5px;
+  padding-left: 5px;
+  display: flex;
+  flex-direction: column;
+  color: "white";
+}
+.vs-file {
+  display: flex; /* Display icon and title in a row */
+  align-items: center; /* Align items vertically in the center */
+}
+
+.vs-file-icon {
+  margin-right: 0.5rem; /* Add some space between the icon and title */
+}
+
+.vs-file-title {
+  overflow: hidden; /* Hide any overflowing text */
+  text-overflow: ellipsis; /* Display ellipsis for truncated text */
+  white-space: nowrap; /* Prevent text from wrapping */
+}

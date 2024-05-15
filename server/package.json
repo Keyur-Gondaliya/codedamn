@@ -1,0 +1,51 @@
+{
+  "name": "codedamn-container-backend",
+  "version": "1.0.0",
+  "description": "Codedamn like platform which provides containerized environment.",
+  "author": "Keyur Gondaliya",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.ts",
+    "build": "npx tsc",
+    "start": "dist/index.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.564.0",
+    "@aws-sdk/s3-request-presigner": "^3.564.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dockerode": "^4.0.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "fs": "0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.6.3",
+    "morgan": "^1.10.0",
+    "node-cron": "^3.0.3",
+    "node-pty": "^1.0.0",
+    "nodemon": "^3.0.1",
+    "path": "^0.12.7",
+    "socket.io": "^4.7.5",
+    "uuid": "^9.0.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/bcrypt-nodejs": "^0.0.31",
+    "@types/cors": "^2.8.15",
+    "@types/dockerode": "^3.3.28",
+    "@types/express": "^4.17.20",
+    "@types/jsonwebtoken": "^9.0.4",
+    "@types/mongoose": "^5.11.97",
+    "@types/morgan": "^1.9.7",
+    "@types/multer": "^1.4.9",
+    "@types/node": "^20.8.7",
+    "@types/node-cron": "^3.0.11",
+    "@types/nodemailer": "^6.4.13",
+    "@types/uuid": "^9.0.8",
+    "i": "^0.3.7",
+    "npm": "^10.2.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
