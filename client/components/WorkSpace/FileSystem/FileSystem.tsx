@@ -37,8 +37,6 @@ function FileSystem({}: Props) {
           fileSystem: { key: string; url: string; responseText: string }[]
         ) => {
           let finalFileSystem = convertS3KeysToFileSystem(fileSystem);
-          console.log(finalFileSystem);
-
           dispatch(addFileList(finalFileSystem));
           setExplorer(finalFileSystem);
           setIsLoaded(true);

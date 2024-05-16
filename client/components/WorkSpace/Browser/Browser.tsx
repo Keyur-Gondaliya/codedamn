@@ -9,6 +9,7 @@ type Props = { url: string; isTerminalOpen: boolean };
 function Browser({ url, isTerminalOpen }: Props) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [reload, setReload] = useState(1);
   const dispatch = useDispatch();
   const isInitialCommandExecuted = useSelector(
     (state: RootState) => state.fileSystemReducer.isInitialCommandExecuted
@@ -17,12 +18,13 @@ function Browser({ url, isTerminalOpen }: Props) {
     if (isInitialCommandExecuted) {
       const checkIframeLoaded = () => {
         if (!isLoaded) {
-          // Reload the iframe after 4 second till page load.
+          // Reload the iframe after 2 second till page load.
+          setReload((prev) => prev + 1);
           if (iframeRef && iframeRef.current) iframeRef.current.src = url;
           dispatch(setIsBrowserReady(true));
         }
       };
-      const reloadInterval = setInterval(checkIframeLoaded, 4000);
+      const reloadInterval = setInterval(checkIframeLoaded, 2000);
       return () => clearInterval(reloadInterval);
     }
   }, [isLoaded, url, isInitialCommandExecuted]);
@@ -36,9 +38,10 @@ function Browser({ url, isTerminalOpen }: Props) {
     <div className={`w-full flex flex-col ${!isTerminalOpen ? "hidden" : ""}`}>
       <div className="flex justify-center items-center py-1.5 bg-dark-layer-2 text-white">
         <div
-          onClick={() =>
-            iframeRef && iframeRef.current ? (iframeRef.current.src += "") : ""
-          }
+          onClick={() => {
+            iframeRef && iframeRef.current ? (iframeRef.current.src += "") : "";
+            setReload((prev) => prev + 1);
+          }}
           className="p-1 cursor-pointer mx-1.5"
         >
           <Image src="/reload.svg" height={18} width={18} alt="reload" />
@@ -66,6 +69,7 @@ function Browser({ url, isTerminalOpen }: Props) {
           className="border border-dark-divider-border-2"
           ref={iframeRef}
           onLoad={handleLoad}
+          key={reload}
         ></iframe>
       ) : (
         <div className="flex justify-center items-center h-full w-full p-5 m-5 text-dark-gray-8">
