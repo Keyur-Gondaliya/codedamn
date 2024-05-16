@@ -35,12 +35,12 @@ import os from "os";
 var shell = os.platform() === "win32" ? "powershell.exe" : "bash";
 
 function reloadNginx() {
-  var ptyProcess = spawn(shell, ["nginx", "-s", "reload"], {
+  var ptyProcess = spawn(shell, [], {
     name: "xterm-color",
-    cwd: "/",
+    // cwd: "/",
     env: process.env,
   });
-
+  ptyProcess.write("nginx -s reload \r\n");
   ptyProcess.onExit((code: any) => {
     if (code !== 0) {
       console.error(`Error reloading NGINX. Exit code: ${code}`);

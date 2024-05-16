@@ -30,27 +30,28 @@ server {
 
 }
 
-# include /etc/nginx/sites-enabled/server-3003.conf;
-# include /etc/nginx/sites-enabled/server-3004.conf;
-# include /etc/nginx/sites-enabled/server-3005.conf;
-# include /etc/nginx/sites-enabled/server-3006.conf;
-# include /etc/nginx/sites-enabled/server-3007.conf;
-# include /etc/nginx/sites-enabled/server-3008.conf;
-# include /etc/nginx/sites-enabled/server-3009.conf;
-# include /etc/nginx/sites-enabled/server-3010.conf;
-# include /etc/nginx/sites-enabled/server-3011.conf;
-# include /etc/nginx/sites-enabled/server-3012.conf;
-# include /etc/nginx/sites-enabled/server-3013.conf;
-include /etc/nginx/sites-enabled/server-3014.conf;
-# include /etc/nginx/sites-enabled/server-3015.conf;
-# include /etc/nginx/sites-enabled/server-3016.conf;
-# include /etc/nginx/sites-enabled/server-3017.conf;
-# include /etc/nginx/sites-enabled/server-3018.conf;
-# include /etc/nginx/sites-enabled/server-3019.conf;
-# include /etc/nginx/sites-enabled/server-3020.conf;
-# include /etc/nginx/sites-enabled/server-3021.conf;
-include /etc/nginx/sites-enabled/server-3022.conf;
-# include /etc/nginx/sites-enabled/server-3023.conf;
-# include /etc/nginx/sites-enabled/server-3024.conf;
-# include /etc/nginx/sites-enabled/server-3025.conf;
-# include /etc/nginx/sites-enabled/server-3026.conf;
+
+# include /etc/nginx/sites-available/server-3004.conf;
+# include /etc/nginx/sites-available/server-3005.conf;
+# include /etc/nginx/sites-available/server-3006.conf;
+# include /etc/nginx/sites-available/server-3007.conf;
+# include /etc/nginx/sites-available/server-3008.conf;
+# include /etc/nginx/sites-available/server-3009.conf;
+# include /etc/nginx/sites-available/server-3010.conf;
+# include /etc/nginx/sites-available/server-3011.conf;
+# include /etc/nginx/sites-available/server-3012.conf;
+# include /etc/nginx/sites-available/server-3013.conf;
+# include /etc/nginx/sites-available/server-3014.conf;
+# include /etc/nginx/sites-available/server-3015.conf;
+# include /etc/nginx/sites-available/server-3016.conf;
+# include /etc/nginx/sites-available/server-3017.conf;
+# include /etc/nginx/sites-available/server-3018.conf;
+# include /etc/nginx/sites-available/server-3019.conf;
+# include /etc/nginx/sites-available/server-3020.conf;
+# include /etc/nginx/sites-available/server-3021.conf;
+# include /etc/nginx/sites-available/server-3022.conf;
+# include /etc/nginx/sites-available/server-3023.conf;
+# include /etc/nginx/sites-available/server-3024.conf;
+# include /etc/nginx/sites-available/server-3025.conf;
+# include /etc/nginx/sites-available/server-3026.conf;
+
