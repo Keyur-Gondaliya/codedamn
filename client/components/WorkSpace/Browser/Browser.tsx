@@ -1,65 +1,69 @@
 import { RootState } from "@/redux";
 import { setIsBrowserReady } from "@/redux/features/editor-slice";
+import axios from "axios";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 type Props = { url: string; isTerminalOpen: boolean };
-
+type CurrentLink = { link: string; isStarted: boolean };
 function Browser({ url, isTerminalOpen }: Props) {
-  // url = "https://wave-pebble.api-codedamn-lite.keyur-gondaliya.tech/";
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-
   const [reload, setReload] = useState(1);
   const dispatch = useDispatch();
+  const [currentUrl, setCurrentUrl] = useState<CurrentLink>({
+    link: url,
+    isStarted: false,
+  });
   const isInitialCommandExecuted = useSelector(
     (state: RootState) => state.fileSystemReducer.isInitialCommandExecuted
   );
+
   useEffect(() => {
     if (isInitialCommandExecuted) {
-      const checkIframeLoaded = () => {
-        if (!isLoaded) {
+      if (!currentUrl.isStarted) {
+        const checkIframeLoaded = async () => {
           // Reload the iframe after 2 second till page load.
-          setReload((prev) => prev + 1);
-          if (iframeRef && iframeRef.current) iframeRef.current.src = url;
+          await _checkStatus();
           dispatch(setIsBrowserReady(true));
-        }
-      };
-      const reloadInterval = setInterval(checkIframeLoaded, 2000);
-      return () => clearInterval(reloadInterval);
-    }
-  }, [isLoaded, url, isInitialCommandExecuted]);
-
-  const handleLoad = (e: any) => {
-    if (e.target && e.target.contentWindow) {
-      const doc = e.target.contentWindow.document;
-
-      if (doc.doctype && doc.doctype.name === "html") {
-        const authorMetaTag = doc.querySelector('meta[name="author"]');
-        if (
-          authorMetaTag &&
-          authorMetaTag.getAttribute("content") !== "Keyur Gondaliya"
-        ) {
-          console.log('The author is "Keyur Gondaliya".');
-          setIsLoaded(true);
-        }
-      } else {
-        setIsLoaded(true);
+        };
+        const reloadInterval = setInterval(checkIframeLoaded, 2000);
+        return () => clearInterval(reloadInterval);
       }
     }
+  }, [url, isInitialCommandExecuted, currentUrl.isStarted]);
+
+  const handleLoad = async (e: any) => {
     dispatch(setIsBrowserReady(true));
   };
+  async function _checkStatus() {
+    setReload((prev) => prev + 1);
 
+    let currentUrlTemp = url + "?reload=" + reload;
+    try {
+      let res = await fetch(currentUrlTemp, {
+        credentials: "omit",
+        method: "GET",
+        mode: "cors",
+      });
+      if (res.headers.get("x-Server-Status") === "Started") {
+        if (!currentUrl.isStarted)
+          setCurrentUrl({ link: currentUrlTemp, isStarted: true });
+      } else {
+        if (currentUrl.isStarted)
+          setCurrentUrl({ link: currentUrlTemp, isStarted: false });
+      }
+    } catch (error) {
+      setCurrentUrl({ link: url, isStarted: false });
+    }
+  }
   return (
     <div className={`w-full flex flex-col ${!isTerminalOpen ? "hidden" : ""}`}>
       <div className="flex justify-center items-center py-1.5 bg-dark-layer-2 text-white">
         <div
-          onClick={() => {
-            if (iframeRef && iframeRef.current) {
-              iframeRef.current.src += "";
-            }
+          onClick={async () => {
             setReload((prev) => prev + 1);
+            await _checkStatus();
           }}
           className="p-1 cursor-pointer mx-1.5"
         >
@@ -88,8 +92,7 @@ function Browser({ url, isTerminalOpen }: Props) {
           className="border border-dark-divider-border-2"
           ref={iframeRef}
           onLoad={handleLoad}
-          key={reload}
-          src={url + "?reload=" + reload}
+          src={currentUrl.link}
         ></iframe>
       ) : (
         <div className="flex justify-center items-center h-full w-full p-5 m-5 text-dark-gray-8">

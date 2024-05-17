@@ -9,7 +9,7 @@ import { _deleteFilesOnInitiate } from "./utils/supportFunctions";
 import path from "path";
 import { _emitToSocketIDs } from "./listner/socketWorkspace";
 
-cron.schedule("*/20 * * * *", async () => {
+cron.schedule("*/10 * * * *", async () => {
   //find records
   let sessionTimeoutList = await _getAllHistory();
   for (let index = 0; index < sessionTimeoutList.length; index++) {

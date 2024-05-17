@@ -43,7 +43,7 @@ export const playgrounds: Playground[] = [
     image:
       "https://wsrv.nl/?url=https%3A%2F%2Fcodedamn.com%2Fassets%2Fimages%2Fsvg%2Fnode.svg&w=48&q=82&output=webp",
     exposedPort: 3001,
-    initialCommand: [],
+    initialCommand: ["npm install"],
     fileSnapshot: [
       { key: "/index.js", isFolder: false },
       { key: "/package-lock.json", isFolder: false },
