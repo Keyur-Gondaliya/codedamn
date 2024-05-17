@@ -7,8 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 type Props = { url: string; isTerminalOpen: boolean };
 
 function Browser({ url, isTerminalOpen }: Props) {
+  // url = "https://wave-pebble.api-codedamn-lite.keyur-gondaliya.tech/";
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+
   const [reload, setReload] = useState(1);
   const dispatch = useDispatch();
   const isInitialCommandExecuted = useSelector(
@@ -29,8 +31,23 @@ function Browser({ url, isTerminalOpen }: Props) {
     }
   }, [isLoaded, url, isInitialCommandExecuted]);
 
-  const handleLoad = () => {
-    setIsLoaded(true);
+  const handleLoad = (e: any) => {
+    if (e.target && e.target.contentWindow) {
+      const doc = e.target.contentWindow.document;
+
+      if (doc.doctype && doc.doctype.name === "html") {
+        const authorMetaTag = doc.querySelector('meta[name="author"]');
+        if (
+          authorMetaTag &&
+          authorMetaTag.getAttribute("content") !== "Keyur Gondaliya"
+        ) {
+          console.log('The author is "Keyur Gondaliya".');
+          setIsLoaded(true);
+        }
+      } else {
+        setIsLoaded(true);
+      }
+    }
     dispatch(setIsBrowserReady(true));
   };
 
@@ -39,7 +56,9 @@ function Browser({ url, isTerminalOpen }: Props) {
       <div className="flex justify-center items-center py-1.5 bg-dark-layer-2 text-white">
         <div
           onClick={() => {
-            iframeRef && iframeRef.current ? (iframeRef.current.src += "") : "";
+            if (iframeRef && iframeRef.current) {
+              iframeRef.current.src += "";
+            }
             setReload((prev) => prev + 1);
           }}
           className="p-1 cursor-pointer mx-1.5"
@@ -61,15 +80,16 @@ function Browser({ url, isTerminalOpen }: Props) {
         <iframe
           title="browser-frame"
           allowFullScreen
-          src={url}
           style={{
             width: "100%",
             height: "100%",
+            backgroundColor: "white",
           }}
           className="border border-dark-divider-border-2"
           ref={iframeRef}
           onLoad={handleLoad}
           key={reload}
+          src={url + "?reload=" + reload}
         ></iframe>
       ) : (
         <div className="flex justify-center items-center h-full w-full p-5 m-5 text-dark-gray-8">
